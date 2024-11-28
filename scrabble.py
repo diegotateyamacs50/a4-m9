@@ -1,6 +1,4 @@
-NPLAYER = 0
-higher_point = 0
-highest_player = 0
+
 
 # TODO: IMPLEMENTAR VERIFICAÇÃO DE EMPATES
 
@@ -35,9 +33,13 @@ def one_word(word):
 
 # main
 def main():
+    NPLAYER = 0
+    higher_point = 0
+    highest_player = 0
+
     print("Bem vindo ao jogo de Scrabble!")
     # Número de jogadores que irão participar
-    NPLAYER = int(input("Quantos jogadores irão participar?"))
+    NPLAYER = int(input("Quantos jogadores irão participar? "))
 
     words = []
     scores = []
@@ -47,18 +49,20 @@ def main():
         input_player = input(f"Jodador {p + 1}, insira sua palavra: ")
         
         # Verifica se há somente uma palavra como entrada
-        if not one_word(words[p]):
+        if not one_word(input_player):
             print(f"Jogador {p + 1} foi desqualificado dessa rodada por inserir mais de uma palavra.")
             continue
 
          # Transforma em minúscula (para a contagem de pontos)
-        words = words[p].tolower()
+        input_player = input_player.lower()
         words.append(input_player)
         scores.append(player_score(input_player))
+        
+    # Linha para separar mensagem de entrada e pontuação
+    print('-' * 40)
 
     # Mostra as pontuações de todos os jogadores
     # Decide o vencedor
-    
     for i in range(NPLAYER):
         print(f"Jogador {i + 1} - Palavra: {words[i]} - Pontuação: {scores[i]}")
 
@@ -67,7 +71,13 @@ def main():
             higher_point = scores[i]
             highest_player = i
 
-    print(f"O jogador {highest_player} venceu com {higher_point} pontos!")
+    for t in range(NPLAYER):
+        if scores[t] == higher_point:
+            print("Houve um empate!")
+            return
+
+
+    print(f"O jogador {highest_player + 1} venceu com {higher_point} pontos!")
 
 
 if __name__ == "__main__":
